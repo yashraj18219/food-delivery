@@ -3,7 +3,7 @@ import React from "react";
 const Header = ()=>{
     return(<div className="header">
         <div className="logo-container">
-            <img  src="./src/5514794.jpg" alt="App logo" />
+            <img  src="./src/foodimg.jpg" alt="App logo" />
         </div>
         <div className="nav-items">
             <ul>
