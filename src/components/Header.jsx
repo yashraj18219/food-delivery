@@ -1,9 +1,10 @@
 import React from "react";
+import foodimg from "../assets/foodimg.jpg"
 // import ReactDOM from "react/client";
 const Header = ()=>{
     return(<div className="header">
         <div className="logo-container">
-            <img  src="./src/foodimg.jpg" alt="App logo" />
+            <img  src={foodimg} alt="App logo" />
         </div>
         <div className="nav-items">
             <ul>
