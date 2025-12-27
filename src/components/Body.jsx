@@ -7,9 +7,13 @@ import useBody from "../utils/useBody";
 
 const Body = () => {
   const {allRestaurants,allMenu} = useBody();
-  const listRestro = allRestaurants;
+  const [listRestro,setListRestro] = useState([]);
   const [searchText,setSearchText] = useState("");
   
+  useEffect(()=>{
+      setListRestro(allRestaurants);
+  },[allRestaurants]);
+
   if(listRestro.length === 0 || allMenu.length ===0)
   {
     return <Shimmer/>
