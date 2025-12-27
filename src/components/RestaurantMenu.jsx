@@ -1,22 +1,14 @@
 import React, { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
-import { DISH_URL } from "../utils/constants";
+import useRestaurantMenu from "../utils/useRestaurantMenu";
 
 const RestaurantMenu = () => {
-  const [resInfo, setResInfo] = useState(null);
+  
   const [allItems, setAllItems] = useState([]);
   const {resId} = useParams();
+  const resInfo= useRestaurantMenu(resId);
 
-  useEffect(() => {
-    const fetchMenu = async () => {
-      const data = await fetch(DISH_URL + resId);
-      const json = await data.json();
-      setResInfo(json.data);
-    };
-
-    fetchMenu();
-  }, []);
 
   //  Extract menu items here (NO extra function)
   useEffect(() => {

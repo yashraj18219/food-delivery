@@ -1,17 +1,22 @@
+body{
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
 .header{
     display: flex;
     justify-content: space-between;
-    border: 2px solid black;
     align-items: center;
-    padding: 5px 25px;
+    padding: 3px 25px;
+    box-shadow: 0 8px 6px rgba(0,0,0,0.1);
 }
 .header a{
   all: unset;
   cursor: pointer;
 }
 .logo-container img{
-    height: 100px;
-    width: 100px;
+    height: 80px;
+    width: 80px;
     border-radius: 50%;
 }
 

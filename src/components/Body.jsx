@@ -2,37 +2,24 @@ import React, { useEffect, useState } from "react";
 import MenuCard from "./MenuCard";
 import RestaurantCard from "./RestaurantCard";
 import Shimmer from "./Shimmer";
-import  menuObj  from "../utils/mockData";
 import { Link } from "react-router-dom";
+import useBody from "../utils/useBody";
 
 const Body = () => {
-
-  const [allRestaurants, setAllRestaurants]= useState([])
-  let [listRestro,setListRestro] = useState([]);
+  const {allRestaurants,allMenu} = useBody();
+  const listRestro = allRestaurants;
   const [searchText,setSearchText] = useState("");
   
-  useEffect(()=>{
-    fetchData();
-  },[]);
-
-  const fetchData = async()=>{
-      const data = await fetch("https://foodfire.onrender.com/api/restaurants?lat=21.1702401&lng=72.83106070000001&page_type=DESKTOP_WEB_LISTING")
-      const json = await data.json();
-      console.log(json);
-      setAllRestaurants(json?.data?. cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-      setListRestro(json?.data?. cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
-      
-  }
-  if(listRestro.length === 0)
+  if(listRestro.length === 0 || allMenu.length ===0)
   {
     return <Shimmer/>
   }
   return (
     <div className="body">
       <div className="menu-box">
-        <h2>What's on your mind?</h2>
+        <h2>Favourite Dishes</h2>
         <div className="menu-container">
-          {menuObj.map((menu) => {
+          {allMenu.map((menu) => {
             return <MenuCard key={menu.id} menuData={menu} />;
           })}
         </div>
