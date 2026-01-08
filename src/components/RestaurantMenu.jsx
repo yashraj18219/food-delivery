@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Shimmer from "./Shimmer";
+import ShimmerMenu from "./ShimmerMenu";
 import { useParams } from "react-router-dom";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
 import RestaurantCategory from "./RestaurantCategory";
@@ -9,7 +9,7 @@ const RestaurantMenu = () => {
   const { resId } = useParams();
   const resInfo = useRestaurantMenu(resId);
 
-  if (!resInfo) return <Shimmer />;
+  if (!resInfo) return <ShimmerMenu />;
 
   const menuCards =
     resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards || [];
@@ -22,21 +22,7 @@ const RestaurantMenu = () => {
         "type.googleapis.com/swiggy.presentation.food.v2.NestedItemCategory"
   );
 
-  // const items = [];
-  // console.log(categoryCards);
-
-  // categoryCards.forEach((cat) => {
-  //   const card = cat.card.card;
-
-  //   if (card?.categories) {
-  //     card.categories.forEach((subCat) => {
-  //       subCat.itemCards?.forEach((item) => items.push(item));
-  //     });
-  //   } else if (card?.itemCards) {
-  //     card.itemCards.forEach((item) => items.push(item));
-  //   }
-  // });
-  // setAllItems(items);
+ 
 
   const { name, cuisines, costForTwoMessage, areaName } =
     resInfo?.cards[2]?.card?.card?.info || {};

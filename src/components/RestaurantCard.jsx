@@ -15,7 +15,7 @@ const RestaurantCard = (props) => {
 
   return (
     <div
-      className="res-card w-[250px] p-2 m-4 rounded-xl  transition-all duration-300 ease-in-out
+      className="res-card w-62.5 p-2 m-4 rounded-xl  transition-all duration-300 ease-in-out
     hover:bg-[#e3dfcc]
     hover:cursor-pointer
     hover:-translate-y-2
@@ -23,7 +23,7 @@ const RestaurantCard = (props) => {
     hover:shadow-[0_10px_25px_rgba(0,0,0,0.2)]"
     >
       <img
-        className="res-img w-full h-[145px] rounded-xl "
+        className="res-img w-full h-36.5 rounded-xl "
         src={RES_URL + resData.info.cloudinaryImageId}
       />
       <div className="res-details p-1 rounded-xl">
@@ -33,7 +33,7 @@ const RestaurantCard = (props) => {
 
         <div className="rating-row flex items-center mt-1 mb-1 text-sm gap-5 font-medium">
           <div className="rating-icon flex items-center">
-            <img className="w-[14px] h-[14px] " src={star} alt="star" />
+            <img className="w-3.5 h-3.5 " src={star} alt="star" />
             <span>{avgRating}</span>
           </div>
 
