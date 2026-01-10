@@ -2,36 +2,98 @@ import React, { useState } from "react";
 import foodimg from "../assets/foodimg.jpg"
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
-
+import { useSelector } from "react-redux";
+import { NavLink } from "react-router-dom";
 const Header = ()=>{
     const[btnName,setBtnName] = useState("login");
     const onlineStatus = useOnlineStatus();
 
-    return(<div className="flex justify-between items-center bg-gray-[150] p-1 shadow-xl mb-5 ">
-        <div >
-            <img  className="w-22 rounded-full " src={foodimg} alt="App logo" />
-        </div>
+   const cartItems = useSelector((store) =>
+  store.cart.items.reduce((total, item) => total + item.quantity, 0)
+);
+
+    return(<div className="flex justify-between items-center bg-gray-[150] p-1 shadow-xl  ">
+            <Link to="/">
+                <img  className="w-15 h-15 rounded-full mx-5" src={foodimg} alt="App logo" />
+            </Link>
+            
+        
         <div>
-            <ul className="flex p-4 m-3 gap-6 text-xl font-medium">
-                <li>
-                     Status: {(onlineStatus? "🍏" : "🍎")}
-                </li>
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li><Link to="/about">About Us</Link>
-                </li>
-                <li><Link to="/contact">Contact Us</Link></li>
-                <li>Cart</li>
-                <button className="w-18 cursor-pointer rounded-lg border-1 hover:bg-gray-400" onClick={()=>{
-                    if(btnName ==="login")
-                    setBtnName("logout");
-                else{
-                    setBtnName("login");
-                }
-                }}>{btnName}</button>
-            </ul>
-        </div>
+  <ul className="flex mx-7 gap-4 text-xl font-medium items-center">
+
+    <li>
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          `px-2 py-1 ${
+            isActive ? "text-orange-500" : "hover:text-gray-600"
+          }`
+        }
+      >
+        Home
+      </NavLink>
+    </li>
+
+    <li>
+      <NavLink
+        to="/about"
+        className={({ isActive }) =>
+          `px-2 py-1 ${
+            isActive ? "text-orange-500" : "hover:text-gray-600"
+          }`
+        }
+      >
+        About
+      </NavLink>
+    </li>
+
+    <li>
+      <NavLink
+        to="/contact"
+        className={({ isActive }) =>
+          `px-2 py-1 ${
+            isActive ? "text-orange-500" : "hover:text-gray-600"
+          }`
+        }
+      >
+        Contact
+      </NavLink>
+    </li>
+
+    
+    <li>
+      <NavLink
+        to="/cart"
+        className={({ isActive }) =>
+          `px-2 py-1 flex items-center gap-1 ${
+            isActive ? "text-orange-500" : "hover:text-gray-600"
+          }`
+        }
+      >
+        Cart
+        <span
+          className={`min-w-[23px] text-center ${
+            cartItems === 0 ? "invisible" : "visible"
+          }`}
+        >
+          ({cartItems})
+        </span>
+      </NavLink>
+    </li>
+
+    <li>
+      <button
+        className="  rounded-lg w-18 border hover:bg-gray-200 transition hover:cursor-pointer"
+        onClick={() =>
+          setBtnName(btnName === "login" ? "logout" : "login")
+        }
+      >
+        {btnName}
+      </button>
+    </li>
+
+  </ul>
+</div>
     </div>)
 }
 export default Header

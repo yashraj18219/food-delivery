@@ -8,11 +8,19 @@ import About from "./components/About";
 import Contact from "./components/Contact";
 import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
+import { Provider } from "react-redux";
+import appStore from "./utils/appStore";
+import Cart from "./components/Cart";
+
 const AppLayout = () => {
-  return(<div>
+  return(
+  <Provider store = {appStore}>
+  <div>
     <Header/>
     <Outlet/>
-  </div>);
+  </div>
+  </Provider>
+);
 };
 
 const appRouter = createBrowserRouter([
@@ -33,12 +41,17 @@ const appRouter = createBrowserRouter([
     element:<Contact/>
   },
   {
+    path:"/cart",
+    element:<Cart/>
+  },
+  {
     path:"/restaurants/:resId",//resId is dynamic that shows different restaurant menu on different resId
     element:<RestaurantMenu/>,
   }
     ],
     errorElement:<Error/>
   },
+  
   
 ])
 
