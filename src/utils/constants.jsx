@@ -7,4 +7,6 @@ export const DISH_URL = "https://foodfire.onrender.com/api/menu?page-type=REGULA
 export const RES_LIST_URL = "https://foodfire.onrender.com/api/restaurants?lat=21.1702401&lng=72.83106070000001&page_type=DESKTOP_WEB_LISTING";
 
 // Backend API (Namaste-Node)
-export const API_BASE_URL = "http://localhost:5000/api";
+// export const API_BASE_URL = "http://localhost:5000/api";
+
+export const API_BASE_URL = "https://food-delivery-backend-vercel.vercel.app/api";
