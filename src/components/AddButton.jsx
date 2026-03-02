@@ -1,25 +1,16 @@
-import { useDispatch, useSelector } from "react-redux";
-import { addItem, removeItem } from "../utils/cartSlice";
+import { getCart, addItem, removeItem } from "../utils/cart";
 
 const AddButton = ({ item }) => {
-  const dispatch = useDispatch();
-
   const itemId = item.card.info.id;
+  const cartItem = getCart().find((i) => i.id === itemId);
 
-  const cartItem = useSelector((store) =>
-    store.cart.items.find((i) => i.id === itemId)
-  );
-
-  // Handler to add item
   const handleAddItem = (item) => {
-    dispatch(
-      addItem({
-        id: itemId, // UNIQUE
-        name: item.card.info.name,
-        price: (item.card.info.defaultPrice ?? item.card.info.price) / 100,
-        imageId: item.card.info.imageId,
-      })
-    );
+    addItem({
+      id: itemId,
+      name: item.card.info.name,
+      price: (item.card.info.defaultPrice ?? item.card.info.price) / 100,
+      imageId: item.card.info.imageId,
+    });
   };
 
   // NOT IN CART
@@ -48,7 +39,7 @@ const AddButton = ({ item }) => {
     >
       <button
         className="text-lg font-bold text-green-600 cursor-pointer"
-        onClick={() => dispatch(removeItem(itemId))}
+        onClick={() => removeItem(itemId)}
       >
         −
       </button>

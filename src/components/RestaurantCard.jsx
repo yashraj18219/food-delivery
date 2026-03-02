@@ -17,7 +17,6 @@ const RestaurantCard = (props) => {
     <div
       className="res-card w-62.5 p-2 m-4 rounded-xl  transition-all duration-300 ease-in-out
     hover:bg-[#e3dfcc]
-    hover:cursor-pointer
     hover:-translate-y-2
     hover:scale-[1.05]
     hover:shadow-[0_10px_25px_rgba(0,0,0,0.2)]"
@@ -39,7 +38,12 @@ const RestaurantCard = (props) => {
 
           <span>{resData.info.sla.slaString}</span>
         </div>
-        <span className="cuisines block truncate ">{cuisines.join(", ")}</span>
+        <span
+          className="cuisines block truncate cursor-default"
+          title={cuisines?.join(", ") ?? ""}
+        >
+          {cuisines?.join(", ")}
+        </span>
         <p>{toTitleCase(resData.info.areaName)}</p>
       </div>
     </div>

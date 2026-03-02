@@ -1,9 +1,7 @@
 import { MENU_URL } from "../utils/constants";
-import { useDispatch } from "react-redux";
-import { addItem, removeItem } from "../utils/cartSlice";
+import { addItem, removeItem } from "../utils/cart";
 
 const CartItemList = ({ items }) => {
-  const dispatch = useDispatch();
 
   return (
     <div>
@@ -36,7 +34,7 @@ const CartItemList = ({ items }) => {
               >
                 <button
                   className="text-lg font-bold text-green-600"
-                  onClick={() => dispatch(removeItem(item.id))}
+                  onClick={() => removeItem(item.id)}
                 >
                   −
                 </button>
@@ -45,7 +43,7 @@ const CartItemList = ({ items }) => {
 
                 <button
                   className="text-lg font-bold text-green-600"
-                  onClick={() => dispatch(addItem(item))}
+                  onClick={() => addItem(item)}
                 >
                   +
                 </button>

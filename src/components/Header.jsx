@@ -1,16 +1,23 @@
-import React, { useState } from "react";
-import foodimg from "../assets/foodimg.jpg"
-import { Link } from "react-router-dom";
+import React from "react";
+import foodimg from "../assets/foodimg.jpg";
+import { Link, useNavigate } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
-import { useSelector } from "react-redux";
 import { NavLink } from "react-router-dom";
-const Header = ()=>{
-    const[btnName,setBtnName] = useState("login");
-    const onlineStatus = useOnlineStatus();
+import { logout, getUser } from "../utils/auth";
+import { getCart } from "../utils/cart";
 
-   const cartItems = useSelector((store) =>
-  store.cart.items.reduce((total, item) => total + item.quantity, 0)
-);
+const Header = () => {
+  const navigate = useNavigate();
+  const user = getUser();
+  const cartItems = getCart();
+  const onlineStatus = useOnlineStatus();
+  const cartCount = cartItems.reduce((total, item) => total + item.quantity, 0);
+  const isDeliveryPartner = user?.role === "Delivery Partner";
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login", { replace: true });
+  };
 
     return(<div className="flex justify-between items-center bg-gray-[150] p-1 shadow-xl  ">
             <Link to="/">
@@ -60,7 +67,30 @@ const Header = ()=>{
       </NavLink>
     </li>
 
-    
+    {!isDeliveryPartner && (
+    <li>
+      <NavLink
+        to="/orders"
+        className={({ isActive }) =>
+          `px-2 py-1 ${isActive ? "text-orange-500" : "hover:text-gray-600"}`
+        }
+      >
+        My Orders
+      </NavLink>
+    </li>
+    )}
+    {isDeliveryPartner && (
+    <li>
+      <NavLink
+        to="/delivery"
+        className={({ isActive }) =>
+          `px-2 py-1 ${isActive ? "text-orange-500" : "hover:text-gray-600"}`
+        }
+      >
+        My Deliveries
+      </NavLink>
+    </li>
+    )}
     <li>
       <NavLink
         to="/cart"
@@ -73,22 +103,20 @@ const Header = ()=>{
         Cart
         <span
           className={`min-w-[23px] text-center ${
-            cartItems === 0 ? "invisible" : "visible"
+            cartCount === 0 ? "invisible" : "visible"
           }`}
         >
-          ({cartItems})
+          ({cartCount})
         </span>
       </NavLink>
     </li>
 
     <li>
       <button
-        className="  rounded-lg w-18 border hover:bg-gray-200 transition hover:cursor-pointer"
-        onClick={() =>
-          setBtnName(btnName === "login" ? "logout" : "login")
-        }
+        className="rounded-lg w-22 border hover:bg-gray-200 transition hover:cursor-pointer px-3 py-1"
+        onClick={handleLogout}
       >
-        {btnName}
+        Logout
       </button>
     </li>
 

@@ -1,59 +1,55 @@
 // import "./style.css";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom/client";
-import Header from "./components/Header";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { setCartListener } from "./utils/cart";
+import ProtectedRoute from "./components/ProtectedRoute";
+import LoginRoute from "./components/LoginRoute";
+import AppLayout from "./components/AppLayout";
 import Body from "./components/Body";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import About from "./components/About";
 import Contact from "./components/Contact";
-import Error from "./components/Error";
 import RestaurantMenu from "./components/RestaurantMenu";
-import { Provider } from "react-redux";
-import appStore from "./utils/appStore";
 import Cart from "./components/Cart";
+import Checkout from "./components/Checkout";
+import DeliveryPartnerOrders from "./components/DeliveryPartnerOrders";
+import MyOrders from "./components/MyOrders";
 
-const AppLayout = () => {
-  return(
-  <Provider store = {appStore}>
-  <div>
-    <Header/>
-    <Outlet/>
-  </div>
-  </Provider>
-);
-};
+function App() {
+  const [, setCartVersion] = useState(0);
+  useEffect(() => {
+    setCartListener(() => setCartVersion((v) => v + 1));
+    return () => setCartListener(null);
+  }, []);
 
-const appRouter = createBrowserRouter([
-  {
-    path:"/",
-    element: <AppLayout/>,
-    children:[
-      {
-        path : "/",
-        element: <Body/>
-      },
-  {
-    path:"/about",
-    element:<About/>
-  },
-  {
-    path:"/contact",
-    element:<Contact/>
-  },
-  {
-    path:"/cart",
-    element:<Cart/>
-  },
-  {
-    path:"/restaurants/:resId",//resId is dynamic that shows different restaurant menu on different resId
-    element:<RestaurantMenu/>,
-  }
-    ],
-    errorElement:<Error/>
-  },
-  
-  
-])
+  return (
+    <BrowserRouter>
+      <Routes>
+          <Route path="/login" element={<LoginRoute />} />
+
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<Body />} />
+            <Route path="about" element={<About />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="cart" element={<Cart />} />
+            <Route path="checkout" element={<Checkout />} />
+            <Route path="orders" element={<MyOrders />} />
+            <Route path="delivery" element={<DeliveryPartnerOrders />} />
+            <Route path="restaurants/:resId" element={<RestaurantMenu />} />
+          </Route>
+
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+    </BrowserRouter>
+  );
+}
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={appRouter}/>);
+root.render(<App />);
